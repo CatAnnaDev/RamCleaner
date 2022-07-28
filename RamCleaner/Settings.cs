@@ -3,12 +3,12 @@ namespace RamCleaner
     public class Settings
     {
 
-        internal static Area MemoryAreas;
+        internal static Area MemoryAreas = StandbyListLowPriority | SystemWorkingSet | ProcessesWorkingSet | StandbyList | CombinedPageList | ModifiedPageList;
 
         static Settings()
         {
 
-            MemoryAreas = StandbyListLowPriority | SystemWorkingSet | ProcessesWorkingSet;
+            MemoryAreas = StandbyListLowPriority | SystemWorkingSet | ProcessesWorkingSet | StandbyList | CombinedPageList | ModifiedPageList;
 
             Reload();
         }

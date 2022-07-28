@@ -4,7 +4,10 @@
     {
         private static void Main(string[] args)
         {
-            Cleaner.Clean(Settings.MemoryAreas);
+            foreach (Area x in (Area[])Enum.GetValues(typeof(Area)))
+            {
+                Cleaner.Clean(x);
+            }
         }
     }
 }

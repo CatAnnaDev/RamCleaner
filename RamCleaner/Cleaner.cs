@@ -45,7 +45,7 @@ namespace RamCleaner
                 }
             }
 
-            // Clean Standby List
+            // Clean Standby List / Low Priority
             if (areas.HasFlag(StandbyList) || areas.HasFlag(StandbyListLowPriority))
             {
                 try
@@ -75,6 +75,8 @@ namespace RamCleaner
 
         private static void CleanCombinedPageList()
         {
+            logWriter.Log("CleanCombinedPageList ----------------------------------------------------------------------------");
+
             // Windows minimum version
             if (!ComputerHelper.IsWindows8OrAbove)
             {
@@ -120,6 +122,8 @@ namespace RamCleaner
 
         private static void CleanModifiedPageList()
         {
+            logWriter.Log("CleanModifiedPageList ----------------------------------------------------------------------------");
+
             // Windows minimum version
             if (!ComputerHelper.IsWindowsVistaOrAbove)
             {
@@ -159,6 +163,8 @@ namespace RamCleaner
 
         private static void CleanStandbyList(bool lowPriority = false)
         {
+            logWriter.Log("CleanStandbyList ----------------------------------------------------------------------------");
+
             // Windows minimum version
             if (!ComputerHelper.IsWindowsVistaOrAbove)
             {
@@ -199,6 +205,8 @@ namespace RamCleaner
 
         private static void CleanSystemWorkingSet()
         {
+            logWriter.Log("CleanSystemWorkingSet ----------------------------------------------------------------------------");
+
             // Windows minimum version
             if (!ComputerHelper.IsWindowsVistaOrAbove)
             {
