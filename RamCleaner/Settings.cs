@@ -1,14 +1,16 @@
+
+
 namespace RamCleaner
 {
     public class Settings
     {
 
-        internal static Enums.Memory.Area MemoryAreas;
+        internal static Area MemoryAreas;
 
         static Settings()
         {
 
-            MemoryAreas = Enums.Memory.Area.StandbyListLowPriority | Enums.Memory.Area.SystemWorkingSet | Enums.Memory.Area.ProcessesWorkingSet;
+            MemoryAreas = StandbyListLowPriority | SystemWorkingSet | ProcessesWorkingSet;
 
             Reload();
         }
@@ -24,10 +26,10 @@ namespace RamCleaner
                     }
                     else
                     {
-                        MemoryAreas = (Enums.Memory.Area)Enum.Parse(typeof(Enums.Memory.Area), Convert.ToString(key.GetValue(Constants.App.RegistryKey.MemoryAreas, MemoryAreas)));
+                        MemoryAreas = (Area)Enum.Parse(typeof(Area), Convert.ToString(key.GetValue(Constants.App.RegistryKey.MemoryAreas, MemoryAreas)));
 
-                        if (MemoryAreas.HasFlag(Enums.Memory.Area.StandbyList | Enums.Memory.Area.StandbyListLowPriority))
-                            MemoryAreas &= ~Enums.Memory.Area.StandbyList;
+                        if ((StandbyList | StandbyListLowPriority).HasFlag(MemoryAreas))
+                            MemoryAreas &= ~StandbyList;
                     }
                 }
             }

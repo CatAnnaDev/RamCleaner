@@ -7,8 +7,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="CXuesong.Shims.VisualBasic.Devices" Version="0.3.0"/>
-    </ItemGroup>
-
 </Project>

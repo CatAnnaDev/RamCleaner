@@ -1,7 +1,10 @@
+
+
 namespace RamCleaner
 {
     public class Cleaner
     {
+        static LogWriter logWriter = new LogWriter();
         internal static void Clean(Enums.Memory.Area areas)
         {
             // Clean Processes Working Set
@@ -169,7 +172,7 @@ namespace RamCleaner
             {
                 return;
             }
-
+            
             object memoryPurgeStandbyList = lowPriority ? Constants.Windows.MemoryPurgeLowPriorityStandbyList : Constants.Windows.MemoryPurgeStandbyList;
             GCHandle handle = GCHandle.Alloc(memoryPurgeStandbyList, GCHandleType.Pinned);
 
@@ -217,9 +220,9 @@ namespace RamCleaner
                 object systemCacheInformation;
 
                 if (ComputerHelper.Is64Bit)
-                    systemCacheInformation = new Structs.Windows.SystemCacheInformation64 { MinimumWorkingSet = -1L, MaximumWorkingSet = -1L };
+                    systemCacheInformation = new Structs.Windows.SystemCacheInformation64(-1L, -1L);
                 else
-                    systemCacheInformation = new Structs.Windows.SystemCacheInformation32 { MinimumWorkingSet = uint.MaxValue, MaximumWorkingSet = uint.MaxValue };
+                    systemCacheInformation = new Structs.Windows.SystemCacheInformation32(uint.MaxValue, uint.MaxValue);
 
                 handle = GCHandle.Alloc(systemCacheInformation, GCHandleType.Pinned);
 
@@ -260,6 +263,8 @@ namespace RamCleaner
 
         private static void CleanProcessesWorkingSet()
         {
+            logWriter.Log($"CleanProcessesWorkingSet ----------------------------------------------------------------------------");
+            
             // Windows minimum version
             if (!ComputerHelper.IsWindowsVistaOrAbove)
             {
@@ -276,10 +281,14 @@ namespace RamCleaner
             {
                 try
                 {
+                    
                     using (process)
                     {
+                        logWriter.Log($"Process Clear: {process.Handle} {process.ProcessName}");
                         if (!process.HasExited && import.EmptyWorkingSet(process.Handle) == 0)
+                        {
                             throw new Win32Exception(Marshal.GetLastWin32Error());
+                        }
                     }
                 }
                 catch (InvalidOperationException)
@@ -289,7 +298,10 @@ namespace RamCleaner
                 catch (Win32Exception e)
                 {
                     if (e.NativeErrorCode != (int)Enums.Windows.SystemErrorCode.ERROR_ACCESS_DENIED)
+                    {
+                        logWriter.Log($"Process Access Denied: {e}");
                         Console.WriteLine(e);
+                    }
                 }
             }
         }

@@ -25,6 +25,11 @@ namespace RamCleaner
                 private readonly uint Unused2;
                 private readonly uint Unused3;
                 private readonly uint Unused4;
+                public SystemCacheInformation32(uint minimumWorkingSet, uint maximumWorkingSet) : this()
+                {
+                    MinimumWorkingSet = minimumWorkingSet;
+                    MaximumWorkingSet = maximumWorkingSet;
+                }
             }
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -39,6 +44,11 @@ namespace RamCleaner
                 private readonly long Unused2;
                 private readonly long Unused3;
                 private readonly long Unused4;
+                public SystemCacheInformation64(long minimumWorkingSet, long maximumWorkingSet) : this()
+                {
+                    MinimumWorkingSet = minimumWorkingSet;
+                    MaximumWorkingSet = maximumWorkingSet;
+                }
             }
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
