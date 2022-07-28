@@ -2,9 +2,9 @@ namespace RamCleaner
 {
     internal class LogWriter
     {
-        
-        private StreamWriter logWriter = File.AppendText(Constants.App.Log.logPath);
-        
+
+        private readonly StreamWriter logWriter = File.AppendText(Constants.App.Log.logPath);
+
         public void Log(string s)
         {
             DateTime date;
@@ -14,16 +14,16 @@ namespace RamCleaner
                 date = DateTime.Now;
                 s = $"[{date.Day}/{date.Month} {date.Hour}:{date.Minute}:{date.Second} - LOG] {s}";
                 logWriter.WriteLine(s);
-                
+
             }
             else
             {
                 date = DateTime.Now;
                 s = $"[{date.Day}/{date.Month} {date.Hour}:{date.Minute}:{date.Second} - LOG] {s}";
                 logWriter.WriteLine(s);
-                
+
             }
-            
+
             //logWriter.Close();
         }
     }

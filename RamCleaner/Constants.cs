@@ -4,11 +4,12 @@ namespace RamCleaner
     {
         internal static class App
         {
-            
+
             internal static class Log
             {
                 internal static readonly string logPath = $@"{Directory.GetCurrentDirectory()}\logs_{DateTime.Now.ToString("dd-MM-yy_hh_mm_ss")}.log";
             }
+
             internal static class RegistryKey
             {
                 internal const string MemoryAreas = "MemoryAreas";

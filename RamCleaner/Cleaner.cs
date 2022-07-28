@@ -1,14 +1,12 @@
-
-
 namespace RamCleaner
 {
     public class Cleaner
     {
-        static LogWriter logWriter = new LogWriter();
-        internal static void Clean(Enums.Memory.Area areas)
+        private static readonly LogWriter logWriter = new LogWriter();
+        internal static void Clean(Area areas)
         {
             // Clean Processes Working Set
-            if (areas.HasFlag(Enums.Memory.Area.ProcessesWorkingSet))
+            if (areas.HasFlag(ProcessesWorkingSet))
             {
                 try
                 {
@@ -22,7 +20,7 @@ namespace RamCleaner
             }
 
             // Clean System Working Set
-            if (areas.HasFlag(Enums.Memory.Area.SystemWorkingSet))
+            if (areas.HasFlag(SystemWorkingSet))
             {
                 try
                 {
@@ -35,7 +33,7 @@ namespace RamCleaner
             }
 
             // Clean Modified Page List
-            if (areas.HasFlag(Enums.Memory.Area.ModifiedPageList))
+            if (areas.HasFlag(ModifiedPageList))
             {
                 try
                 {
@@ -48,11 +46,11 @@ namespace RamCleaner
             }
 
             // Clean Standby List
-            if (areas.HasFlag(Enums.Memory.Area.StandbyList) || areas.HasFlag(Enums.Memory.Area.StandbyListLowPriority))
+            if (areas.HasFlag(StandbyList) || areas.HasFlag(StandbyListLowPriority))
             {
                 try
                 {
-                    CleanStandbyList(areas.HasFlag(Enums.Memory.Area.StandbyListLowPriority));
+                    CleanStandbyList(areas.HasFlag(StandbyListLowPriority));
                 }
                 catch (Exception e)
                 {
@@ -61,7 +59,7 @@ namespace RamCleaner
             }
 
             // Clean Combined Page List
-            if (areas.HasFlag(Enums.Memory.Area.CombinedPageList))
+            if (areas.HasFlag(CombinedPageList))
             {
                 try
                 {
@@ -172,7 +170,7 @@ namespace RamCleaner
             {
                 return;
             }
-            
+
             object memoryPurgeStandbyList = lowPriority ? Constants.Windows.MemoryPurgeLowPriorityStandbyList : Constants.Windows.MemoryPurgeStandbyList;
             GCHandle handle = GCHandle.Alloc(memoryPurgeStandbyList, GCHandleType.Pinned);
 
@@ -263,8 +261,8 @@ namespace RamCleaner
 
         private static void CleanProcessesWorkingSet()
         {
-            logWriter.Log($"CleanProcessesWorkingSet ----------------------------------------------------------------------------");
-            
+            logWriter.Log("CleanProcessesWorkingSet ----------------------------------------------------------------------------");
+
             // Windows minimum version
             if (!ComputerHelper.IsWindowsVistaOrAbove)
             {
@@ -281,7 +279,7 @@ namespace RamCleaner
             {
                 try
                 {
-                    
+
                     using (process)
                     {
                         logWriter.Log($"Process Clear: {process.Handle} {process.ProcessName}");

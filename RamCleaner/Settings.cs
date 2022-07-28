@@ -1,5 +1,3 @@
-
-
 namespace RamCleaner
 {
     public class Settings
